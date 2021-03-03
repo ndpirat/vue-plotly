@@ -6,32 +6,19 @@
           <div class="col">
             <form class="form-group">
               <select v-model="selected" class="form-control col" id="selector">
-                <option
-                  v-for="(example, idx) in generics"
-                  :key="idx"
-                  :value="example"
-                  >{{ example.display }}</option
-                >
+                <option v-for="(example, idx) in generics" :key="idx" :value="example">{{ example.display }}</option>
               </select>
             </form>
           </div>
 
           <div class="col descriptor">
             <span>Layout:</span>
-            <editor
-              class="layout"
-              v-model="selected.data.layout"
-              :show-btns="false"
-            />
+            <editor class="layout" v-model="selected.data.layout" :show-btns="false" />
           </div>
 
           <div class="col descriptor">
             <span>Data:</span>
-            <editor
-              class="data"
-              v-model="selected.data.data"
-              :show-btns="false"
-            />
+            <editor class="data" v-model="selected.data.data" :show-btns="false" />
           </div>
         </div>
 
@@ -42,12 +29,7 @@
             </div>
           </div>
 
-          <plotly
-            class="graph"
-            v-bind="selected.data.attr"
-            :data="selected.data.data"
-            :layout="selected.data.layout"
-          />
+          <plotly class="graph" v-bind="selected.data.attr" :data="selected.data.data" :layout="selected.data.layout" />
         </div>
       </div>
     </div>
