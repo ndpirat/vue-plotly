@@ -2,6 +2,7 @@
   "name": "vue-plotly",
   "version": "1.1.0",
   "private": false,
+  "author": "Nicolas Descoins",
   "scripts": {
     "serve": "vue-cli-service serve ./example/main.js --open",
     "build": "vue-cli-service build --name vue-plotly --entry ./src/index.js --target lib",
@@ -59,5 +60,10 @@
     "vue",
     "component"
   ],
-  "license": "MIT"
+  "homepage": "https://github.com/ndpirat/vue-plotly",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ndpirat/vue-plotly"
+  }
 }
