@@ -61,6 +61,7 @@
     "component"
   ],
   "homepage": "https://github.com/ndpirat/vue-plotly",
+  "from": "https://github.com/ndpirat/vue-plotly",
   "license": "MIT",
   "repository": {
     "type": "git",
