@@ -5,7 +5,7 @@
   "author": "Nicolas Descoins",
   "scripts": {
     "serve": "vue-cli-service serve ./example/main.js --open",
-    "build": "vue-cli-service build --name vue-plotly --entry ./src/index.js --target lib",
+    "build": "vue-cli-service build --name vue-plotly --entry ./src/index.js --target lib --skip-plugins prettier",
     "test:unit": "vue-cli-service test:unit --coverage",
     "lint": "vue-cli-service lint --fix",
     "build:doc": "vue-cli-service build --entry ./example/main.js --dest docs --mode development",
@@ -21,9 +21,9 @@
     "src/*"
   ],
   "dependencies": {
-    "core-js": "^3.9.1",
-    "plotly.js": "^1.58.4",
-    "vue": "^2.6.12",
+    "core-js": "^3.25.3",
+    "plotly.js": "^2.14.0",
+    "vue": "^2.7.10",
     "vue-resize-directive": "^1.2.0"
   },
   "devDependencies": {
@@ -53,8 +53,8 @@
     "vue-draggable-resizable": "^2.3.0",
     "vue-highlight.js": "^3.1.0",
     "vue-json-editor": "^1.4.3",
-    "vue-server-renderer": "^2.6.12",
-    "vue-template-compiler": "^2.6.12"
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10"
   },
   "keywords": [
     "vue",
