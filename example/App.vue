@@ -2,7 +2,7 @@
   <div id="app">
     <a href="https://github.com/David-Desmaisons/vue-plotly" target="_blank">
       <img
-        style="position: fixed; top: 0; right: 0; border: 0; z-index:99999"
+        style="position: fixed; top: 0; right: 0; border: 0; z-index: 99999"
         width="149"
         height="149"
         src="https://github.blog/wp-content/uploads/2008/12/forkme_right_gray_6d6d6d.png?resize=149%2C149"
@@ -12,20 +12,30 @@
       />
     </a>
 
-    <div class="container ">
+    <div class="container">
       <div class="card">
         <div class="card-header">
           <div class="logo">
             <img alt="Vue.draggable logo" src="./assets/logo.png" />
             <p>
-              <a class="title-link" href="https://github.com/David-Desmaisons/vue-plotly" target="_blank"><span class="title">Vue.plotly</span></a
+              <a
+                class="title-link"
+                href="https://github.com/David-Desmaisons/vue-plotly"
+                target="_blank"
+                ><span class="title">Vue.plotly</span></a
               >a thin vue wrapper for
-              <a href="https://plot.ly/javascript/" target="_blank">plotly.js</a>
+              <a href="https://plot.ly/javascript/" target="_blank"
+                >plotly.js</a
+              >
             </p>
           </div>
 
           <div class="row justify-content-md-center">
-            <div class="col-3 features" v-for="(data, idx) in features" :key="idx">
+            <div
+              class="col-3 features"
+              v-for="(data, idx) in features"
+              :key="idx"
+            >
               <div>
                 <h4 class="big-icone"><i :class="`fa ${data.icon}`"></i></h4>
                 <p class="card-text">{{ data.text }}</p>
@@ -42,38 +52,40 @@
 
     <footer class="footer fixed-bottom bg-dark">
       <div class="container">
-        <img src="https://plot.ly/gh-pages/documentation/static/images/browser_support.png" />
+        <img
+          src="https://plot.ly/gh-pages/documentation/static/images/browser_support.png"
+        />
       </div>
     </footer>
   </div>
 </template>
 
 <script>
-import graphpicker from "./components/graphpicker.vue";
+import graphpicker from './components/graphpicker.vue'
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     graphpicker
   },
   data() {
     return {
       features: [
-        { text: "plotly.js methods and events", icon: "fa-bar-chart" },
-        { text: "Data reactivity", icon: "fa-bolt" },
-        { text: "Redraw on resizing", icon: "fa-arrows-alt" }
+        { text: 'plotly.js methods and events', icon: 'fa-bar-chart' },
+        { text: 'Data reactivity', icon: 'fa-bolt' },
+        { text: 'Redraw on resizing', icon: 'fa-arrows-alt' }
       ]
-    };
+    }
   },
   computed: {
     code() {
       const fromAttr = Object.keys(this.data.attr)
         .map(key => `:${key}="${this.data.attr[key]}"`)
-        .join(" ");
-      return `<plotly :data="data" :layout="layout" ${fromAttr}/>`;
+        .join(' ')
+      return `<plotly :data="data" :layout="layout" ${fromAttr}/>`
     }
   }
-};
+}
 </script>
 
 <style lang="less">
@@ -84,7 +96,7 @@ export default {
     }
   }
 
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;

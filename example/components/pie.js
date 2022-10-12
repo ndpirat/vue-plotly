@@ -1,19 +1,19 @@
 const pie = {
   values: [40, 10, 30],
   rotation: 90,
-  textinfo: "none",
+  textinfo: 'none',
   marker: {
-    colors: ["orange", "yellow", "BLUE"]
+    colors: ['orange', 'yellow', 'BLUE']
   },
-  labels: ["remaing", "done", "doing"],
-  hoverinfo: "label+value+percent",
+  labels: ['remaing', 'done', 'doing'],
+  hoverinfo: 'label+value+percent',
   hole: 0.5,
-  type: "pie",
+  type: 'pie',
   showlegend: false
-};
+}
 
 export default {
-  display: "Pie graph",
+  display: 'Pie graph',
   data: {
     data: [pie],
     attr: {
@@ -21,13 +21,13 @@ export default {
     },
     layout: {
       font: {
-        color: "white"
+        color: 'white'
       },
       title: {
-        text: "pie"
+        text: 'pie'
       },
-      plot_bgcolor: "black",
-      paper_bgcolor: "black"
+      plot_bgcolor: 'black',
+      paper_bgcolor: 'black'
     }
   }
-};
+}

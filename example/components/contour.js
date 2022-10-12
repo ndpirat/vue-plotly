@@ -1,5 +1,5 @@
 export default {
-  display: "Contour graph",
+  display: 'Contour graph',
   data: {
     data: [
       {
@@ -12,14 +12,14 @@ export default {
         ],
         x: [-9, -6, -5, -3, -1],
         y: [0, 1, 4, 5, 7],
-        type: "contour"
+        type: 'contour'
       }
     ],
     attr: {
       displayModeBar: false
     },
     layout: {
-      title: "Setting the X and Y Coordinates in a Contour Plot"
+      title: 'Setting the X and Y Coordinates in a Contour Plot'
     }
   }
-};
+}

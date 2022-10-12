@@ -4,8 +4,8 @@ export default {
   },
   plot: jest.fn(),
   newPlot: jest.fn(element => {
-    element.on = jest.fn();
-    element.removeAllListeners = jest.fn();
+    element.on = jest.fn()
+    element.removeAllListeners = jest.fn()
   }),
   react: jest.fn(),
   relayout: jest.fn(),
@@ -19,4 +19,4 @@ export default {
   prependTraces: jest.fn(),
   toImage: jest.fn(),
   downloadImage: jest.fn()
-};
+}

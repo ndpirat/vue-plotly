@@ -1,17 +1,17 @@
-const x = [];
+const x = []
 for (var i = 0; i < 500; i++) {
-  x[i] = Math.random();
+  x[i] = Math.random()
 }
 const trace = {
   x: x,
-  type: "histogram"
-};
+  type: 'histogram'
+}
 
 export default {
-  display: "Histogram",
+  display: 'Histogram',
   data: {
     data: [trace],
     attr: {},
     layout: {}
   }
-};
+}
