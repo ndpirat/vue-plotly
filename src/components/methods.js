@@ -1,4 +1,4 @@
-import Plotly from 'plotly.js'
+import Plotly from 'plotly.js-cartesian-dist-min'
 
 const plotlyFunctions = [
   'restyle',

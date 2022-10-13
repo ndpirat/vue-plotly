@@ -105,3 +105,6 @@ npm run test:unit
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+### Customize plotly bundles
+https://github.com/plotly/plotly.js/blob/master/dist/README.md
+cuurently shipped with plotly.js-cartesian-dist-min

@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Plotly from '@/components/Plotly.vue'
-import plotlyjs from 'plotly.js'
+import plotlyjs from 'plotly.js-cartesian-dist-min'
 import resize from 'vue-resize-directive'
 jest.mock('vue-resize-directive')
 
@@ -55,6 +55,7 @@ const methods = [
 
 function shallowMountPlotty() {
   jest.clearAllMocks()
+  const elem = document.createElement('div')
   return shallowMount(Plotly, {
     propsData: {
       layout,
@@ -62,7 +63,7 @@ function shallowMountPlotty() {
       id
     },
     attrs,
-    attachToDocument: true
+    attachTo: elem
   })
 }
 
@@ -95,15 +96,11 @@ describe('Plotly.vue', () => {
   })
 
   it('renders a div', () => {
-    expect(wrapper.is('div')).toBe(true)
+    expect(wrapper.find('div'))
   })
 
   it('sets id on div', () => {
-    expect(wrapper.is(`#${id}`)).toBe(true)
-  })
-
-  it('sets id on div', () => {
-    expect(wrapper.is(`#${id}`)).toBe(true)
+    expect(wrapper.find(`#${id}`).html()).toBe('<div id="id"></div>')
   })
 
   it('calls plotly newPlot', () => {
@@ -195,19 +192,19 @@ describe('Plotly.vue', () => {
   })
 
   describe.each([
-    ['data', wrapper => wrapper.setProps({ data: [{ data: 'novo' }] })],
-    ['attr', wrapper => (wrapper.vm.$attrs = { displayModeBar: 'hover' })]
+    ['data', _wrapper => _wrapper.setProps({ data: [{ data: 'novo' }] })],
+    ['attr', _wrapper => (_wrapper.vm.$attrs = { displayModeBar: 'hover' })]
   ])('when %p changes', (_, changeData) => {
     describe.each([
       ['once', changeData],
       [
         'twice',
-        wrapper => {
-          changeData(wrapper)
-          changeData(wrapper)
+        _wrapper => {
+          changeData(_wrapper)
+          changeData(_wrapper)
         }
       ]
-    ])('%s in the same tick', (_, update) => {
+    ])('%s in the same tick', (__, update) => {
       const { error } = console
 
       beforeEach(() => {
@@ -273,8 +270,8 @@ describe('Plotly.vue', () => {
     beforeEach(() => {
       console.error = () => {}
       jest.clearAllMocks()
-      const attrs = Object.assign({}, vm.$attrs)
-      vm.$attrs = attrs
+      const _attrs = Object.assign({}, vm.$attrs)
+      vm.$attrs = _attrs
     })
     afterEach(() => {
       console.error = error
@@ -323,7 +320,7 @@ describe('Plotly.vue', () => {
     })
   })
 
-  const changeData = () => wrapper.setProps({ data: { novo: 'data' } })
+  const changeData = () => wrapper.setProps({ data: [{ novo: 'data' }] })
   const changeLayout = () => wrapper.setProps({ layout: { novo: 'layout' } })
 
   describe.each([
@@ -349,7 +346,7 @@ describe('Plotly.vue', () => {
       await vm.$nextTick()
       expect(plotlyjs.react).toHaveBeenCalledWith(
         vm.$el,
-        { novo: 'data' },
+        [{ novo: 'data' }],
         { novo: 'layout' },
         {
           displayModeBar: true,
