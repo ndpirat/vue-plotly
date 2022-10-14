@@ -2,7 +2,7 @@
   <div :id="id" v-resize:debounce.100="onResize" />
 </template>
 <script>
-import Plotly from 'plotly.js-cartesian-dist-min'
+import Plotly from 'plotly.js/dist/plotly-gWAP.min.js'
 import events from './events.js'
 import methods from './methods.js'
 import { camelize } from '@/utils/helper'

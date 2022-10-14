@@ -11,7 +11,7 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^plotly.js$': '<rootDir>/tests/mocks/plotly.js',
-    '^plotly.js-cartesian-dist-min$': '<rootDir>/tests/mocks/plotly.js'
+    '^plotly.js/dist/plotly-gWAP.min.js$': '<rootDir>/tests/mocks/plotly.js'
   },
   snapshotSerializers: ['jest-serializer-vue'],
   testMatch: [

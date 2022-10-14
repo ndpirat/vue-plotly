@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Plotly from '@/components/Plotly.vue'
-import plotlyjs from 'plotly.js-cartesian-dist-min'
+import plotlyjs from 'plotly.js/dist/plotly-gWAP.min.js'
 import resize from 'vue-resize-directive'
 jest.mock('vue-resize-directive')
 

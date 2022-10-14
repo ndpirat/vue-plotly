@@ -105,6 +105,14 @@ npm run test:unit
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### Customize plotly bundles
-https://github.com/plotly/plotly.js/blob/master/dist/README.md
-cuurently shipped with plotly.js-cartesian-dist-min
+### Customize plotly bundles for gWAP
+see : https://github.com/plotly/plotly.js/blob/master/CUSTOM_BUNDLE.md
+cuurently shipped with custom bundle named : plotly.js/dist/plotly-gWAP.min.js
+all traces / transform are listed at :
+https://github.com/plotly/plotly.js/blob/master/lib/index.js
+
+Instructions :
+goto : cd node_modules/plotly.js
+install plotly deps  : npm i
+build custom bundles : npm run custom-bundle -- --out gWAP --traces scatter,scatterternary,bar,contour,histogram,heatmap,heatmapgl,pie,indicator --transforms none
+rebuild vue-plotly : npm run:prepublishOnly

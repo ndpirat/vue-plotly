@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "core-js": "^3.25.3",
-    "plotly.js-cartesian-dist-min": "^2.15.1",
+    "plotly.js": "^2.15.1",
     "vue": "^2.7.10",
     "vue-resize-directive": "^1.2.0"
   },
