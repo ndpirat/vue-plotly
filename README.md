@@ -51,6 +51,7 @@ export default {
 
 #### Props 
 
+
 - `data` ***Array*** (*optional*) 
 
   [Data](https://plot.ly/javascript/reference/) to be displayed
@@ -68,51 +69,64 @@ export default {
   Plotly component implements the [transparent wrapper pattern](https://zendev.com/2018/05/31/transparent-wrapper-components-in-vue.html):<br>All other props will be passed as plotly graphic [option](https://plot.ly/javascript/configuration-options/).
 
 ## Installation
+
 ```
 npm install vue-plotly
 ```
 
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Run your tests
+
 ```
 npm run test
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
 
 ### Run your unit tests
+
 ```
 npm run test:unit
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Customize plotly bundles for gWAP
+
 see : https://github.com/plotly/plotly.js/blob/master/CUSTOM_BUNDLE.md
 cuurently shipped with custom bundle named : plotly.js/dist/plotly-gWAP.min.js
 all traces / transform are listed at :
 https://github.com/plotly/plotly.js/blob/master/lib/index.js
 
 Instructions :
-goto : cd node_modules/plotly.js
-install plotly deps  : npm i
-build custom bundles : npm run custom-bundle -- --out gWAP --traces scatter,scatterternary,bar,contour,histogram,heatmap,heatmapgl,pie,indicator --transforms none
-rebuild vue-plotly : npm run:prepublishOnly
+goto : cd node_modules/plotly.js  
+
+install plotly deps  : npm i  
+
+build custom bundles : npm run custom-bundle -- --out gWAP --traces scatter,scatterternary,bar,contour,histogram,heatmap,heatmapgl,pie,indicator --transforms none  
+
+rebuild vue-plotly : npm run:prepublishOnly  
+
