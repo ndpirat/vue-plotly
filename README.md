@@ -121,12 +121,25 @@ cuurently shipped with custom bundle named : plotly.js/dist/plotly-gWAP.min.js
 all traces / transform are listed at :
 https://github.com/plotly/plotly.js/blob/master/lib/index.js
 
-Instructions :
-goto : cd node_modules/plotly.js  
+Instructions for building a custom plotly bundle
 
-install plotly deps  : npm i  
+goto local plotly
+```
+cd node_modules/plotly.js  
+```
 
-build custom bundles : npm run custom-bundle -- --out gWAP --traces scatter,scatterternary,bar,contour,histogram,heatmap,heatmapgl,pie,indicator --transforms none  
+install plotly deps
+```
+npm i
+```  
 
-rebuild vue-plotly : npm run:prepublishOnly  
+build custom bundles
+```
+npm run custom-bundle -- --out gWAP --traces scatter,scatterternary,bar,contour,histogram,heatmap,heatmapgl,pie,indicator --transforms none  
+```
+
+rebuild vue-plotly
+```
+npm run:prepublishOnly  
+```
 
