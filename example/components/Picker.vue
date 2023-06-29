@@ -128,9 +128,9 @@ div.jsoneditor-menu {
   page-break-inside: avoid;
   font-family: monospace;
   font-size: 15px;
-  line-height: 0.6;
+  line-height: 1;
   margin-bottom: 0.8em;
-  max-width: 50%;
+  max-width: 100%;
   overflow: auto;
   padding: 1em 1.5em;
   display: block;

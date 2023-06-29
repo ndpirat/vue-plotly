@@ -21,7 +21,6 @@
     "src/*"
   ],
   "dependencies": {
-    "@vue/compat": "^3.3.4",
     "lodash.debounce": "^4.0.8",
     "plotly.js": "^2.15.1",
     "vue": "^3.3.4"
