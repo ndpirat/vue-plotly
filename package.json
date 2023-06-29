@@ -1,6 +1,6 @@
 {
-  "name": "vue-plotly",
-  "version": "1.1.0",
+  "name": "vue-3-plotly",
+  "version": "2.0.0",
   "private": false,
   "author": "Nicolas Descoins",
   "scripts": {
@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "plotly.js": "^2.15.1",
+    "plotly.js": "^2.24.2",
     "vue": "^3.3.4"
   },
   "devDependencies": {
