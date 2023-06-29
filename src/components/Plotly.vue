@@ -1,26 +1,31 @@
 <template>
-  <div :id="id" v-resize:debounce.100="onResize" />
+  <div :id="id" :ref="'plotly-' + id"></div>
 </template>
 <script>
+import lodashDebounce from 'lodash.debounce'
 import Plotly from 'plotly.js/dist/plotly-gWAP.min.js'
 import events from './events.js'
 import methods from './methods.js'
-import { camelize } from '@/utils/helper'
+import { camelize } from '@/utils/helper.js'
 
-const directives = {}
-if (typeof window !== 'undefined') {
-  directives.resize = require('vue-resize-directive')
-}
+const { debounce = lodashDebounce } = lodashDebounce
+const defaultDelay = 100
+
+const debounceResize = debounce(el => {
+  return Plotly.Plots.resize(el)
+}, defaultDelay)
+
 export default {
-  name: 'plotly',
+  name: 'Plotly',
   inheritAttrs: false,
-  directives,
   props: {
     data: {
-      type: Array
+      type: Array,
+      required: true
     },
     layout: {
-      type: Object
+      type: Object,
+      required: true
     },
     id: {
       type: String,
@@ -30,35 +35,7 @@ export default {
   },
   data() {
     return {
-      scheduled: null,
       innerLayout: { ...this.layout }
-    }
-  },
-  mounted() {
-    Plotly.newPlot(this.$el, this.data, this.innerLayout, this.options)
-    events.forEach(evt => {
-      this.$el.on(evt.completeName, evt.handler(this))
-    })
-  },
-  watch: {
-    data: {
-      handler() {
-        this.schedule({ replot: true })
-      },
-      deep: true
-    },
-    options: {
-      handler(value, old) {
-        if (JSON.stringify(value) === JSON.stringify(old)) {
-          return
-        }
-        this.schedule({ replot: true })
-      },
-      deep: true
-    },
-    layout(layout) {
-      this.innerLayout = { ...layout }
-      this.schedule({ replot: false })
     }
   },
   computed: {
@@ -73,32 +50,50 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  watch: {
+    data: {
+      handler() {
+        this.schedule('replot')
+      },
+      deep: true
+    },
+    options: {
+      handler(value, old) {
+        if (JSON.stringify(value) === JSON.stringify(old)) {
+          return
+        }
+        this.schedule('replot')
+      },
+      deep: true
+    },
+    layout(layout) {
+      this.innerLayout = { ...layout }
+      this.schedule('relayout')
+    }
+  },
+  mounted() {
+    Plotly.newPlot(this.$el, this.data, this.innerLayout, this.options)
+    events.forEach(evt => {
+      this.$el.on(evt.completeName, evt.handler(this))
+    })
+
+    this.resizeObserver = new ResizeObserver(() => {
+      debounceResize(this.$el)
+    })
+    this.resizeObserver.observe(this.$el)
+  },
+  beforeUnmount() {
     events.forEach(event => this.$el.removeAllListeners(event.completeName))
+    this.resizeObserver.disconnect()
+    debounceResize.cancel()
     Plotly.purge(this.$el)
   },
   methods: {
     ...methods,
-    onResize() {
-      Plotly.Plots.resize(this.$el)
-    },
-    schedule(context) {
-      const { scheduled } = this
-      if (scheduled) {
-        scheduled.replot = scheduled.replot || context.replot
-        return
-      }
-      this.scheduled = context
+    schedule(plotMethod) {
       this.$nextTick(() => {
-        const {
-          scheduled: { replot }
-        } = this
-        this.scheduled = null
-        if (replot) {
-          this.react()
-          return
-        }
-        this.relayout(this.innerLayout)
+        if (plotMethod === 'replot') this.react()
+        if (plotMethod === 'relayout') this.relayout(this.innerLayout)
       })
     },
     toImage(options) {

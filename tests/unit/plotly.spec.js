@@ -1,8 +1,12 @@
 import { shallowMount } from '@vue/test-utils'
 import Plotly from '@/components/Plotly.vue'
 import plotlyjs from 'plotly.js/dist/plotly-gWAP.min.js'
-import resize from 'vue-resize-directive'
-jest.mock('vue-resize-directive')
+
+window.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn()
+}))
 
 let wrapper
 let vm
@@ -53,7 +57,7 @@ const methods = [
   'purge'
 ]
 
-function shallowMountPlotty() {
+function shallowMountPlotly(attrs) {
   jest.clearAllMocks()
   const elem = document.createElement('div')
   return shallowMount(Plotly, {
@@ -74,17 +78,19 @@ describe('Plotly.vue', () => {
     attrs = {
       'display-mode-bar': true
     }
-    wrapper = shallowMountPlotty()
+    wrapper = shallowMountPlotly(attrs)
     vm = wrapper.vm
   })
 
   it('defines props', () => {
     const props = {
       data: {
-        type: Array
+        type: Array,
+        required: true
       },
       layout: {
-        type: Object
+        type: Object,
+        required: true
       },
       id: {
         type: String,
@@ -93,6 +99,10 @@ describe('Plotly.vue', () => {
       }
     }
     expect(Plotly.props).toEqual(props)
+  })
+
+  it('sets innerLayout', async () => {
+    expect(wrapper.vm.innerLayout).toEqual({ ...vm.layout })
   })
 
   it('renders a div', () => {
@@ -115,39 +125,12 @@ describe('Plotly.vue', () => {
     attrs = {
       responsive: true
     }
-    wrapper = shallowMountPlotty()
+    wrapper = shallowMountPlotly(attrs)
 
     expect(plotlyjs.newPlot).toHaveBeenCalledWith(vm.$el, data, layout, {
       responsive: true
     })
     expect(plotlyjs.newPlot.mock.calls.length).toBe(1)
-  })
-
-  it('calls resize directive', () => {
-    const {
-      mock: { calls }
-    } = resize.inserted
-    expect(calls.length).toBe(1)
-    const [call] = calls
-    expect(call[0]).toBe(vm.$el)
-    expect(call[1]).toMatchObject({
-      arg: 'debounce',
-      name: 'resize',
-      rawName: 'v-resize:debounce.100',
-      expression: 'onResize'
-    })
-  })
-
-  it('call plotly resize when resized', () => {
-    const {
-      mock: {
-        calls: [call]
-      }
-    } = resize.inserted
-    const { value: callBackResize } = call[1]
-    callBackResize()
-
-    expect(plotlyjs.Plots.resize).toHaveBeenCalledWith(vm.$el)
   })
 
   test.each(events)(
@@ -192,8 +175,7 @@ describe('Plotly.vue', () => {
   })
 
   describe.each([
-    ['data', _wrapper => _wrapper.setProps({ data: [{ data: 'novo' }] })],
-    ['attr', _wrapper => (_wrapper.vm.$attrs = { displayModeBar: 'hover' })]
+    ['data', _wrapper => _wrapper.setProps({ data: [{ data: 'novo' }] })]
   ])('when %p changes', (_, changeData) => {
     describe.each([
       ['once', changeData],
@@ -205,15 +187,9 @@ describe('Plotly.vue', () => {
         }
       ]
     ])('%s in the same tick', (__, update) => {
-      const { error } = console
-
       beforeEach(() => {
-        console.error = () => {}
         jest.clearAllMocks()
         update(wrapper)
-      })
-      afterEach(() => {
-        console.error = error
       })
 
       it('calls plotly react once in the next tick', async () => {
@@ -234,17 +210,10 @@ describe('Plotly.vue', () => {
     })
   })
 
-  describe('when attrs and props changes in the same tick', () => {
-    const { error } = console
-
+  describe('when props changes in the same tick', () => {
     beforeEach(() => {
-      console.error = () => {}
       jest.clearAllMocks()
       wrapper.setProps({ data: [{ data: 'novo' }] })
-      wrapper.vm.$attrs = { displayModeBar: 'hover' }
-    })
-    afterEach(() => {
-      console.error = error
     })
 
     it('calls plotly react once in the next tick', async () => {
@@ -264,17 +233,10 @@ describe('Plotly.vue', () => {
     })
   })
 
-  describe('when attrs changes to same value', () => {
-    const { error } = console
-
+  describe('when options changes to same value', () => {
     beforeEach(() => {
-      console.error = () => {}
       jest.clearAllMocks()
-      const _attrs = Object.assign({}, vm.$attrs)
-      vm.$attrs = _attrs
-    })
-    afterEach(() => {
-      console.error = error
+      vm.$options.watch.options.handler.call(vm, vm.options, vm.options)
     })
 
     it('does not calls plotly react', async () => {
@@ -285,6 +247,34 @@ describe('Plotly.vue', () => {
     it('does not calls plotly relayout', async () => {
       await vm.$nextTick()
       expect(plotlyjs.relayout).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('when options changes', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
+
+    it('computes options', async () => {
+      expect(wrapper.vm.options).toEqual({
+        displayModeBar: true,
+        responsive: false
+      })
+    })
+
+    it('does calls plotly react', async () => {
+      vm.$options.watch.options.handler.call(vm, {
+        displayModeBar: 'always'
+      })
+
+      await vm.$nextTick()
+      expect(plotlyjs.react).toHaveBeenCalledWith(
+        vm.$el,
+        vm.data,
+        vm.layout,
+        vm.options
+      )
+      expect(plotlyjs.react.mock.calls.length).toBe(1)
     })
   })
 
@@ -320,8 +310,10 @@ describe('Plotly.vue', () => {
     })
   })
 
-  const changeData = () => wrapper.setProps({ data: [{ novo: 'data' }] })
-  const changeLayout = () => wrapper.setProps({ layout: { novo: 'layout' } })
+  const changeData = async () =>
+    await wrapper.setProps({ data: [{ novo: 'data' }] })
+  const changeLayout = async () =>
+    await wrapper.setProps({ layout: { novo: 'layout' } })
 
   describe.each([
     [
@@ -353,12 +345,13 @@ describe('Plotly.vue', () => {
           responsive: false
         }
       )
-      expect(plotlyjs.react.mock.calls.length).toBe(1)
+      expect(plotlyjs.react.mock.calls).toHaveLength(1)
     })
 
-    it('does not calls plotly relayout', async () => {
+    it('calls plotly relayout once', async () => {
       await vm.$nextTick()
-      expect(plotlyjs.relayout).not.toHaveBeenCalled()
+      expect(plotlyjs.relayout).toHaveBeenCalledWith(vm.$el, { novo: 'layout' })
+      expect(plotlyjs.react.mock.calls).toHaveLength(1)
     })
   })
 
@@ -407,7 +400,7 @@ describe('Plotly.vue', () => {
 
   describe('when destroyed', () => {
     beforeEach(() => {
-      wrapper.destroy()
+      wrapper.unmount()
     })
 
     it('calls plotly purge', () => {

@@ -1,24 +1,26 @@
 /**
  * @jest-environment node
  */
-
-const Vue = require('vue')
-const renderer = require('vue-server-renderer').createRenderer()
+import { createSSRApp } from 'vue'
+const { renderToString } = require('@vue/server-renderer')
 const Plotly = require('@/components/Plotly').default
-Vue.component('plotly', Plotly)
-const app = new Vue({
-  name: 'test-app',
-  template: `<plotly></plotly>`
+
+const app = createSSRApp({
+  name: 'TestApp',
+  template: `<Plotly :data="[]" :layout="{}"></Plotly>`
 })
+
+app.component('Plotly', Plotly)
+
 let html
 
 describe('Plotly.vue in a ssr context', () => {
   beforeEach(async () => {
-    html = await renderer.renderToString(app)
+    html = await renderToString(app)
   })
 
   it('can be rendered', () => {
-    const expected = '<div data-server-rendered="true"></div>'
+    const expected = '<div></div>'
     expect(html).toEqual(expected)
   })
 })

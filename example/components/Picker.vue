@@ -5,7 +5,7 @@
         <div class="col-3">
           <div class="col">
             <form class="form-group">
-              <select v-model="selected" class="form-control col" id="selector">
+              <select id="selector" v-model="selected" class="form-control col">
                 <option
                   v-for="(example, idx) in generics"
                   :key="idx"
@@ -21,8 +21,11 @@
             <span>Layout:</span>
             <editor
               class="layout"
-              v-model="selected.data.layout"
-              :show-btns="false"
+              mode="tree"
+              :main-menu-bar="false"
+              :navigation-bar="false"
+              :model-value="selected.data.layout"
+              @update:model-value="updateLayout"
             />
           </div>
 
@@ -30,8 +33,11 @@
             <span>Data:</span>
             <editor
               class="data"
-              v-model="selected.data.data"
-              :show-btns="false"
+              mode="tree"
+              :main-menu-bar="false"
+              :navigation-bar="false"
+              :model-value="selected.data.data"
+              @update:model-value="updateData"
             />
           </div>
         </div>
@@ -39,11 +45,10 @@
         <div class="col-9">
           <div class="row">
             <div class="col">
-              <highlight-code lang="javascript" :code="code" />
+              <div class="code">{{ code }}</div>
             </div>
           </div>
-
-          <plotly
+          <Plotly
             class="graph"
             v-bind="selected.data.attr"
             :data="selected.data.data"
@@ -54,38 +59,34 @@
     </div>
   </div>
 </template>
-<script>
-import editor from 'vue-json-editor'
+<script setup>
+import { reactive, ref, computed } from 'vue'
+import JsonEditorVue from 'json-editor-vue'
+import { Plotly } from '@/index.js'
 import simple from './simple.js'
 import contour from './contour.js'
 import histogram from './histogram.js'
 import histogram2D from './2D-histogram.js'
 import pie from './pie.js'
 
-export default {
-  name: 'picker',
-  components: {
-    editor
-  },
-  data() {
-    return {
-      generics: [simple, contour, histogram, pie, histogram2D],
-      selected: simple
-    }
-  },
-  computed: {
-    code() {
-      const {
-        selected: {
-          data: { attr }
-        }
-      } = this
-      const fromAttr = Object.keys(attr)
-        .map(key => `:${key}="${attr[key]}"`)
-        .join(' ')
-      return `<plotly :data="data" :layout="layout" ${fromAttr}/>`
-    }
-  }
+const editor = JsonEditorVue
+
+const generics = reactive([simple, contour, histogram, pie, histogram2D])
+const selected = ref(simple)
+
+const code = computed(() => {
+  const attr = selected.value.data.attr
+  const fromAttr = Object.keys(attr)
+    .map(key => `:${key}="${attr[key]}"`)
+    .join(' ')
+  return `<plotly :data="data" :layout="layout" ${fromAttr}/>`
+})
+
+const updateLayout = newLayout => {
+  selected.value.data.layout = newLayout
+}
+const updateData = newData => {
+  selected.value.data.data = newData
 }
 </script>
 <style>
@@ -117,5 +118,22 @@ div.jsoneditor-menu {
 .descriptor > span {
   margin-left: 5px;
   margin-top: 5px;
+}
+
+.code {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-left: 3px solid #f36d33;
+  color: #666;
+  page-break-inside: avoid;
+  font-family: monospace;
+  font-size: 15px;
+  line-height: 0.6;
+  margin-bottom: 0.8em;
+  max-width: 50%;
+  overflow: auto;
+  padding: 1em 1.5em;
+  display: block;
+  word-wrap: break-word;
 }
 </style>

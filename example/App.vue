@@ -1,29 +1,12 @@
 <template>
   <div id="app">
-    <a href="https://github.com/David-Desmaisons/vue-plotly" target="_blank">
-      <img
-        style="position: fixed; top: 0; right: 0; border: 0; z-index: 99999"
-        width="149"
-        height="149"
-        src="https://github.blog/wp-content/uploads/2008/12/forkme_right_gray_6d6d6d.png?resize=149%2C149"
-        class="attachment-full size-full"
-        alt="Fork me on GitHub"
-        data-recalc-dims="1"
-      />
-    </a>
-
     <div class="container">
       <div class="card">
         <div class="card-header">
           <div class="logo">
             <img alt="Vue.draggable logo" src="./assets/logo.png" />
             <p>
-              <a
-                class="title-link"
-                href="https://github.com/David-Desmaisons/vue-plotly"
-                target="_blank"
-                ><span class="title">Vue.plotly</span></a
-              >a thin vue wrapper for
+              a thin vue wrapper for
               <a href="https://plot.ly/javascript/" target="_blank"
                 >plotly.js</a
               >
@@ -32,9 +15,9 @@
 
           <div class="row justify-content-md-center">
             <div
-              class="col-3 features"
               v-for="(data, idx) in features"
               :key="idx"
+              class="col-3 features"
             >
               <div>
                 <h4 class="big-icone"><i :class="`fa ${data.icon}`"></i></h4>
@@ -46,7 +29,7 @@
       </div>
 
       <div class="card main-card">
-        <graphpicker />
+        <Picker />
       </div>
     </div>
 
@@ -54,6 +37,7 @@
       <div class="container">
         <img
           src="https://plot.ly/gh-pages/documentation/static/images/browser_support.png"
+          alt=""
         />
       </div>
     </footer>
@@ -61,12 +45,12 @@
 </template>
 
 <script>
-import graphpicker from './components/graphpicker.vue'
+import Picker from './components/Picker.vue'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    graphpicker
+    Picker
   },
   data() {
     return {
@@ -76,14 +60,6 @@ export default {
         { text: 'Redraw on resizing', icon: 'fa-arrows-alt' }
       ]
     }
-  },
-  computed: {
-    code() {
-      const fromAttr = Object.keys(this.data.attr)
-        .map(key => `:${key}="${this.data.attr[key]}"`)
-        .join(' ')
-      return `<plotly :data="data" :layout="layout" ${fromAttr}/>`
-    }
   }
 }
 </script>
@@ -92,7 +68,7 @@ export default {
 #app {
   @media (min-width: 1200px) {
     .container {
-      max-width: 1400px;
+      max-width: 1800px;
     }
   }
 

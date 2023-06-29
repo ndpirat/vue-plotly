@@ -1,14 +1,22 @@
 module.exports = {
   publicPath: './',
   chainWebpack: config => {
+    config.resolve.alias.set('vue', '@vue/compat')
+
     config.module
-      .rule('js-plotly')
-      .test(/\.js$/)
-      .use('ify-loader')
-      .loader('ify-loader')
-      .end()
+      .rule('vue')
+      .use('vue-loader')
+      .tap(options => {
+        return {
+          ...options,
+          compilerOptions: {
+            compatConfig: {
+              MODE: 2
+            }
+          }
+        }
+      })
   },
-  transpileDependencies: false,
   configureWebpack: {
     resolve: {
       fallback: {
