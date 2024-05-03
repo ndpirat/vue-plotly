@@ -13,7 +13,7 @@
     "test:coverage": "vue-cli-service test:unit --coverage --verbose"
   },
   "main": "dist/vue-plotly.umd.js",
-  "module": "dist/vue-plotly.common.min.js",
+  "module": "dist/vue-plotly.common.js",
   "files": [
     "dist/*.css",
     "dist/*.map",
