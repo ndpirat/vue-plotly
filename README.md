@@ -123,7 +123,7 @@ https://github.com/plotly/plotly.js/blob/master/lib/index.js
 
 Instructions for building a custom plotly bundle
 
-goto local plotly
+Go to local plotly
 ```
 cd node_modules/plotly.js  
 ```

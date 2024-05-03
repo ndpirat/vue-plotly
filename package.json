@@ -22,8 +22,8 @@
   ],
   "dependencies": {
     "lodash.debounce": "^4.0.8",
-    "plotly.js": "^2.24.2",
-    "vue": "^3.3.4"
+    "plotly.js": "^2.32.0",
+    "vue": "^3.4.26"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -32,7 +32,7 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-unit-jest": "~5.0.0",
     "@vue/cli-service": "~5.0.8",
-    "@vue/compiler-sfc": "^3.3.4",
+    "@vue/compiler-sfc": "^3.4.26",
     "@vue/test-utils": "^2.4.0",
     "@vue/vue3-jest": "^27.0.0-alpha.1",
     "@vuedoc/md": "^1.6.0",
