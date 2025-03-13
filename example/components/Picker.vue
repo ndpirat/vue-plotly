@@ -42,7 +42,7 @@
           </div>
         </div>
 
-        <div class="col-9">
+        <div class="col-9" style="padding: 40px 0px">
           <div class="row">
             <div class="col">
               <div class="code">{{ code }}</div>
