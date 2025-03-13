@@ -1,13 +1,6 @@
 
 <p align="center"><img width="140"src="https://raw.githubusercontent.com/David-Desmaisons/vue-plotly/master/example/assets/logo.png"></p>
 
-# vue-plotly
-[![GitHub open issues](https://img.shields.io/github/issues/David-Desmaisons/vue-plotly.svg)](https://github.com/David-Desmaisons/vue-plotly/issues)
-[![CircleCI](https://circleci.com/gh/David-Desmaisons/vue-plotly.svg?style=shield)](https://circleci.com/gh/David-Desmaisons/vue-plotly)
-[![codecov](https://codecov.io/gh/David-Desmaisons/vue-plotly/branch/master/graph/badge.svg)](https://codecov.io/gh/David-Desmaisons/vue-plotly)
-[![Npm version](https://img.shields.io/npm/v/vue-plotly.svg)](https://www.npmjs.com/package/vue-plotly)
-[![MIT License](https://img.shields.io/github/license/David-Desmaisons/vue-plotly.svg)](https://github.com/David-Desmaisons/vue-plotly/blob/master/LICENSE)
-
 <h2>Thin vue wrapper for <a
               href="https://plot.ly/javascript/"
               target="_blank"
@@ -21,13 +14,12 @@
 
 ![example](./example/assets/demo.gif)
 
-## Live example
-https://david-desmaisons.github.io/vue-plotly/
-
 ## Usage
+
 ```HTML
 <Plotly :data="data" :layout="layout" :display-mode-bar="false"></Plotly>
 ```
+
 ```javascript
 import { Plotly } from 'vue-plotly'
 
@@ -47,20 +39,18 @@ export default {
   }
 }
 ```
+
 ## API
 
-#### Props 
-
-
-- `data` ***Array*** (*optional*) 
+- `data` ***Array*** (*optional*)
 
   [Data](https://plot.ly/javascript/reference/) to be displayed
 
-- `layout` ***Object*** (*optional*) 
+- `layout` ***Object*** (*optional*)
 
   Graphic [layout](https://plot.ly/javascript/reference/#layout)
 
-- `id` ***String*** (*optional*) 
+- `id` ***String*** (*optional*)
 
   Id of the root HTML element of the component.
 
@@ -70,43 +60,43 @@ export default {
 
 ## Installation
 
-```
+```bash
 npm install vue-plotly
 ```
 
 ## Project setup
 
-```
+```bash
 npm install
 ```
 
 ### Compiles and hot-reloads for development
 
-```
+```bash
 npm run serve
 ```
 
 ### Compiles and minifies for production
 
-```
+```bash
 npm run build
 ```
 
 ### Run your tests
 
-```
+```bash
 npm run test
 ```
 
 ### Lints and fixes files
 
-```
+```bash
 npm run lint
 ```
 
 ### Run your unit tests
 
-```
+```bash
 npm run test:unit
 ```
 
@@ -116,30 +106,33 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Customize plotly bundles for gWAP
 
-see : https://github.com/plotly/plotly.js/blob/master/CUSTOM_BUNDLE.md
+see : <https://github.com/plotly/plotly.js/blob/master/CUSTOM_BUNDLE.md>
 cuurently shipped with custom bundle named : plotly.js/dist/plotly-gWAP.min.js
 all traces / transform are listed at :
-https://github.com/plotly/plotly.js/blob/master/lib/index.js
+<https://github.com/plotly/plotly.js/blob/master/lib/index.js>
 
 Instructions for building a custom plotly bundle
 
 Go to local plotly
-```
+
+```bash
 cd node_modules/plotly.js  
 ```
 
 install plotly deps
-```
+
+```bash
 npm i
 ```  
 
 build custom bundles
-```
-npm run custom-bundle -- --out gWAP --traces scatter,scatterternary,bar,contour,histogram,heatmap,heatmapgl,pie,indicator --transforms none  
+
+```bash
+npm run custom-bundle -- --out gWAP --traces scatter,scatterternary,bar,contour,histogram,heatmap,pie,indicator --transforms none  
 ```
 
 rebuild vue-plotly
-```
+
+```bash
 npm run:prepublishOnly  
 ```
-
