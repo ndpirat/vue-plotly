@@ -3,16 +3,6 @@
     <div class="container">
       <div class="card">
         <div class="card-header">
-          <div class="logo">
-            <img alt="Vue.draggable logo" src="./assets/logo.png" />
-            <p>
-              a thin vue wrapper for
-              <a href="https://plot.ly/javascript/" target="_blank"
-                >plotly.js</a
-              >
-            </p>
-          </div>
-
           <div class="row justify-content-md-center">
             <div
               v-for="(data, idx) in features"
@@ -20,7 +10,9 @@
               class="col-3 features"
             >
               <div>
-                <h4 class="big-icone"><i :class="`fa ${data.icon}`"></i></h4>
+                <h4 class="big-icon">
+                  <span class="sr-only">{{ data.text }}</span>
+                </h4>
                 <p class="card-text">{{ data.text }}</p>
               </div>
             </div>
@@ -32,15 +24,6 @@
         <Picker />
       </div>
     </div>
-
-    <footer class="footer fixed-bottom bg-dark">
-      <div class="container">
-        <img
-          src="https://plot.ly/gh-pages/documentation/static/images/browser_support.png"
-          alt=""
-        />
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -55,9 +38,9 @@ export default {
   data() {
     return {
       features: [
-        { text: 'plotly.js methods and events', icon: 'fa-bar-chart' },
-        { text: 'Data reactivity', icon: 'fa-bolt' },
-        { text: 'Redraw on resizing', icon: 'fa-arrows-alt' }
+        { text: 'plotly.js methods and events' },
+        { text: 'Data reactivity' },
+        { text: 'Redraw on resizing' }
       ]
     }
   }
